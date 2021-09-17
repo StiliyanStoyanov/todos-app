@@ -32,9 +32,16 @@ export const todosSlice = createSlice({
         editTodo: (state, action) => {
 
         },
-        setVisibility: (state, action) => {
-            state.visibilityFilter = action.payload
+        showActive: (state) => {
+            state.visibilityFilter = 'active'
         },
+        showCompleted: (state) => {
+            state.visibilityFilter = 'completed'
+        },
+        showAll: (state) => {
+            state.visibilityFilter = 'all'
+        },
+
     }
 });
 
@@ -43,6 +50,8 @@ export const {
     removeTodo,
     editTodo,
     completeTodo,
-    setVisibility
+    showActive,
+    showCompleted,
+    showAll
 } = todosSlice.actions;
 export default todosSlice.reducer;
