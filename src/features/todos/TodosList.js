@@ -1,23 +1,21 @@
+import styled from "styled-components";
 import TodoCard from "./TodoCard";
 import {useSelector} from "react-redux";
+import {selectVisibleIds} from "./todosSlice";
 
 const TodosList = () => {
-    const todos = useSelector((state) => state.todos);
-    const visibleTodos = deriveVisibleTodos(todos.list, todos.visibilityFilter);
-
+    const visibleIds = useSelector(selectVisibleIds)
     return (
-        <ul>
-            {visibleTodos.map(todo => <TodoCard key={todo.id} todo={todo}/>)}
-        </ul>
+        <Ul>
+            {visibleIds.map(id => <TodoCard key={id} id={id}/>)}
+        </Ul>
     )
 };
 
-const deriveVisibleTodos = (list, visibilityFilter) => {
-    switch (visibilityFilter) {
-        case 'active': return list.filter(todo => !todo.completed);
-        case 'completed': return list.filter(todo => todo.completed);
-        default: return list;
-    }
-}
+const Ul = styled.ul`
+  text-decoration: none;
+  list-style: none;
+  padding: 0;
+`
 
 export default TodosList
