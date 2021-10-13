@@ -1,0 +1,56 @@
+import { ReactNode, CSSProperties } from 'react';
+export interface ContainerProps {
+    display?: CSSProperties['display'],
+    boxSizing?: CSSProperties['boxSizing'],
+    position?: CSSProperties['position'],
+    zIndex?: CSSProperties['zIndex'],
+    outline?: CSSProperties['outline'],
+    overflow?: CSSProperties['overflow'],
+    overflowX?: CSSProperties['overflowX'],
+    overflowY?: CSSProperties['overflowY'],
+    height?: CSSProperties['height'],
+    maxHeight?: CSSProperties['maxHeight'];
+    minHeight?: CSSProperties['minHeight'];
+    width?: CSSProperties['width'],
+    maxWidth?: CSSProperties['maxWidth'],
+    minWidth?: CSSProperties['minWidth'],
+    margin?: CSSProperties['margin'],
+    marginTop?: CSSProperties['marginTop'],
+    marginRight?: CSSProperties['marginRight'],
+    marginBottom?: CSSProperties['marginBottom'],
+    marginLeft?: CSSProperties['marginLeft'],
+    padding?: CSSProperties['padding'],
+    paddingTop?: CSSProperties['paddingTop'],
+    paddingRight?: CSSProperties['paddingRight'],
+    paddingBottom?: CSSProperties['paddingBottom'],
+    paddingLeft?: CSSProperties['paddingLeft'],
+    border?: CSSProperties['border'],
+    borderTop?:CSSProperties['borderTop'],
+    borderRight?:CSSProperties['borderRight'],
+    borderBottom?:CSSProperties['borderBottom'],
+    borderLeft?:CSSProperties['borderLeft'],
+    children?: ReactNode,
+}
+export interface FlexContainerProps {
+    inline?: boolean,
+    wrap?: boolean,
+    column?: boolean,
+    center?: boolean,
+    justifyItems?: CSSProperties['justifyItems'],
+    justifyContent?: CSSProperties['justifyContent'],
+    alignItems?: CSSProperties['alignItems'],
+    alignContent?: CSSProperties['alignContent'],
+    theme?: any,
+    children?: ReactNode,
+}
+
+export interface FlexItemProps {
+    flex?: CSSProperties['flex'],
+    order?: CSSProperties['order'],
+    flexGrow?: CSSProperties['flexGrow'],
+    flexShrink?: CSSProperties['flexShrink'],
+    flexBasis?: CSSProperties['flexBasis'],
+    alignSelf?: CSSProperties['alignSelf'],
+    justifySelf?: CSSProperties['justifySelf'],
+    children?: ReactNode,
+}
