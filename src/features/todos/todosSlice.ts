@@ -1,12 +1,13 @@
 import {createSelector, createSlice} from '@reduxjs/toolkit';
-
+import {TodosState} from "./types";
+import {RootState} from "../../app/store";
 // https://redux.js.org/usage/structuring-reducers/normalizing-state-shape
-const initialState = {
+const initialState: TodosState = {
     entities: {},
     ids: [],
     filter: 'all',
     selectedId: -1,
-    inputPlaceholder: 'What needs doing?'
+    placeholder: 'What needs doing?',
 };
 
 export const todosSlice = createSlice({
@@ -14,10 +15,10 @@ export const todosSlice = createSlice({
     initialState,
     reducers: {
         addTodo: (state, action) => {
-            const {body, completed, important, dueDate} = action?.payload;
+            const {body, completed, important, dueDate} = action?.payload || {};
             if (!body) return;
             const previousId = state.ids[state.ids.length - 1] ?? -1;
-            const nextId = previousId + 1;
+            const nextId = (previousId + 1);
             state.ids.push(nextId);
             state.entities[nextId] = {
                 id: nextId,
@@ -26,8 +27,8 @@ export const todosSlice = createSlice({
                 important: important || false,
                 tags: [],
                 created: Date.now(),
-                dueDate: dueDate
-            }
+                dueDate: dueDate,
+            };
         },
         removeTodo: (state, action) => {
             const {id} = action.payload
@@ -38,11 +39,12 @@ export const todosSlice = createSlice({
                 if (state.selectedId === id) state.selectedId = -1;
             }
         },
+
         editTodo: (state, action) => {
 
         },
         selectTodo: (state,  action) => {
-            const {id} = action.payload
+            const id = action.payload
             const todo = state.entities[id]
             if (todo) state.selectedId = id;
         },
@@ -50,9 +52,14 @@ export const todosSlice = createSlice({
             if (state.selectedId >= 0) state.selectedId = -1;
         },
         toggleCompleted: (state, action) => {
-            const {id} = action.payload
+            const id = action.payload
             const todo = state.entities[id];
             if (todo) todo.completed = !todo.completed
+        },
+        toggleImportant: (state, action) => {
+            const id = action.payload
+            const todo = state.entities[id];
+            if (todo) todo.important = !todo.important
         },
         showActive: (state) => {
             state.filter = 'active'
@@ -67,16 +74,17 @@ export const todosSlice = createSlice({
             state.filter = 'important'
         },
         showScheduled: (state) =>{
-            state.filter = 'scheduled'
+            state.filter = 'planned'
         }
 
     }
 });
-export const selectId = id => state => state.todos.entities[id] || {};
-export const selectIds = state => state.todos.ids
-export const selectEntities = state => state.todos.entities
-export const selectFilter = state => state.todos.filter
-export const selectSelected = state => state.todos.entities[state.todos.selectedId] || null
+export const selectId = (id: number) => (state: RootState) => state.todos.entities[id] || {};
+export const selectIds = (state: RootState) => state.todos.ids
+export const selectEntities = (state: RootState) => state.todos.entities
+export const selectFilter = (state: RootState) => state.todos.filter
+export const selectPlaceholder = (state: RootState) => state.todos.placeholder
+export const selectSelected = (state: RootState) => state.todos.entities[state.todos.selectedId]
 export const selectVisibleIds = createSelector(
     selectEntities,
     selectIds,
@@ -86,7 +94,7 @@ export const selectVisibleIds = createSelector(
             case 'active': return ids.filter(id => !entities[id]?.completed);
             case 'completed': return ids.filter(id => entities[id]?.completed);
             case 'important': return ids.filter(id => entities[id]?.important);
-            case 'scheduled': return ids.filter(id => entities[id]?.dueDate);
+            case 'planned': return ids.filter(id => entities[id]?.dueDate);
             default: return ids;
         }
     }
@@ -99,6 +107,7 @@ export const {
     selectTodo,
     clearSelectedTodo,
     toggleCompleted,
+    toggleImportant,
     showActive,
     showCompleted,
     showAll,

@@ -6,3 +6,6 @@ export const store = configureStore({
         todos: todosReducer
     },
 });
+// https://redux.js.org/usage/usage-with-typescript
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
