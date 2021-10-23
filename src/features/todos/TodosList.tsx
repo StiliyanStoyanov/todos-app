@@ -16,6 +16,7 @@ const Ul = styled.ul`
   text-decoration: none;
   list-style: none;
   padding: 0;
+  overflow: auto;
 `
 
 export default TodosList
