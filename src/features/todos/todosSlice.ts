@@ -1,12 +1,13 @@
-import {createSelector, createSlice} from '@reduxjs/toolkit';
-import {TodosState} from "./types";
+import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {TodosState, AddTodoPayload} from "./todosSlice.types";
 import {RootState} from "../../app/store";
+import {filters, placeholders} from "./utils";
 // https://redux.js.org/usage/structuring-reducers/normalizing-state-shape
 const initialState: TodosState = {
     entities: {},
     ids: [],
     filter: 'all',
-    selectedId: -1,
+    selectedId: null,
     placeholder: 'What needs doing?',
 };
 
@@ -14,11 +15,11 @@ export const todosSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        addTodo: (state, action) => {
-            const {body, completed, important, dueDate} = action?.payload || {};
+        addTodo: (state, action: PayloadAction<AddTodoPayload>) => {
+            const {body, completed, important, dueDate} = action.payload
             if (!body) return;
             const previousId = state.ids[state.ids.length - 1] ?? -1;
-            const nextId = (previousId + 1);
+            const nextId = (previousId + 1).toString();
             state.ids.push(nextId);
             state.entities[nextId] = {
                 id: nextId,
@@ -36,20 +37,20 @@ export const todosSlice = createSlice({
             if (index !== -1) {
                 delete state.entities[id];
                 state.ids.splice(index, 1)
-                if (state.selectedId === id) state.selectedId = -1;
+                if (state.selectedId === id) state.selectedId = null;
             }
         },
 
         editTodo: (state, action) => {
 
         },
-        selectTodo: (state,  action) => {
+        selectTodo: (state,  action: {payload: string}) => {
             const id = action.payload
             const todo = state.entities[id]
             if (todo) state.selectedId = id;
         },
         clearSelectedTodo: (state) => {
-            if (state.selectedId >= 0) state.selectedId = -1;
+            state.selectedId = null;
         },
         toggleCompleted: (state, action) => {
             const id = action.payload
@@ -62,29 +63,39 @@ export const todosSlice = createSlice({
             if (todo) todo.important = !todo.important
         },
         showActive: (state) => {
-            state.filter = 'active'
+            state.filter = filters.active
+            state.placeholder = placeholders.basic
         },
         showCompleted: (state) => {
-            state.filter = 'completed'
+            state.filter = filters.completed
+            state.placeholder = placeholders.basic
         },
         showAll: (state) => {
-            state.filter = 'all'
+            state.filter = filters.all
+            state.placeholder = placeholders.basic
         },
         showImportant: (state) =>{
-            state.filter = 'important'
+            state.filter = filters.important
+            state.placeholder = placeholders.important
         },
-        showScheduled: (state) =>{
-            state.filter = 'planned'
+        showPlanned: (state) =>{
+            state.filter = filters.planned
+            state.placeholder = placeholders.planned
         }
 
     }
 });
-export const selectId = (id: number) => (state: RootState) => state.todos.entities[id] || {};
+export const selectId = (id: string) => (state: RootState) => state.todos.entities[id] || {};
 export const selectIds = (state: RootState) => state.todos.ids
 export const selectEntities = (state: RootState) => state.todos.entities
 export const selectFilter = (state: RootState) => state.todos.filter
 export const selectPlaceholder = (state: RootState) => state.todos.placeholder
-export const selectSelected = (state: RootState) => state.todos.entities[state.todos.selectedId]
+export const selectSelected = (state: RootState) => {
+    if (state.todos.selectedId) {
+        return state.todos.entities[state.todos.selectedId]
+    }
+    return null;
+}
 export const selectVisibleIds = createSelector(
     selectEntities,
     selectIds,
@@ -112,6 +123,6 @@ export const {
     showCompleted,
     showAll,
     showImportant,
-    showScheduled
+    showPlanned
 } = todosSlice.actions;
 export default todosSlice.reducer;
