@@ -2,6 +2,7 @@ import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {TodosState, AddTodoPayload} from "./todosSlice.types";
 import {RootState} from "../../app/store";
 import {filters, placeholders} from "./utils";
+import { v4 as uuid } from 'uuid';
 // https://redux.js.org/usage/structuring-reducers/normalizing-state-shape
 const initialState: TodosState = {
     entities: {},
@@ -18,11 +19,10 @@ export const todosSlice = createSlice({
         addTodo: (state, action: PayloadAction<AddTodoPayload>) => {
             const {body, completed, important, dueDate} = action.payload
             if (!body) return;
-            const previousId = state.ids[state.ids.length - 1] ?? -1;
-            const nextId = (previousId + 1).toString();
-            state.ids.push(nextId);
-            state.entities[nextId] = {
-                id: nextId,
+            const id: string = uuid();
+            state.ids.push(id);
+            state.entities[id] = {
+                id: id,
                 body: body,
                 completed: completed || false,
                 important: important || false,
