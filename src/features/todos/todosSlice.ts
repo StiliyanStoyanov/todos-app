@@ -31,8 +31,8 @@ export const todosSlice = createSlice({
                 dueDate: dueDate,
             };
         },
-        removeTodo: (state, action) => {
-            const {id} = action.payload
+        removeTodo: (state, action: PayloadAction<string>) => {
+            const id = action.payload
             const index = state.ids.findIndex(stateId => stateId === id);
             if (index !== -1) {
                 delete state.entities[id];
