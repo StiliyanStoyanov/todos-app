@@ -1,6 +1,6 @@
 import styled, {CSSObject} from 'styled-components';
 import {containerProps} from "./constant";
-import {ContainerProps} from "./types";
+import {ContainerProps} from "./container.types.";
 
 const containerStyles = (props: ContainerProps): CSSObject => ({
     boxSizing: props.boxSizing,
@@ -34,7 +34,7 @@ const containerStyles = (props: ContainerProps): CSSObject => ({
 });
 
 export const Container = styled('div').withConfig({
-    displayName: 'FlexContainer',
+    displayName: 'Container',
     shouldForwardProp: prop => !containerProps.includes(prop)
 })<ContainerProps>(containerStyles)
 

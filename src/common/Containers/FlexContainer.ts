@@ -1,6 +1,6 @@
 import styled, {CSSObject} from 'styled-components';
 import {flexItemProps} from "./constant";
-import {FlexContainerProps} from "./types";
+import {FlexContainerProps} from "./container.types.";
 
 const flexStyles = (props:FlexContainerProps): CSSObject => {
     const {children, theme, inline, wrap, column, center, ...rest} = props;
