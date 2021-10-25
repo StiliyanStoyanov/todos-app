@@ -7,7 +7,7 @@ export type TodosState = {
             important: boolean,
             tags: string[],
             created: number,
-            dueDate: Date | undefined
+            dueDate: number | undefined
         }
     },
     ids: string[],
@@ -34,5 +34,5 @@ export type AddTodoPayload = {
     body: string,
     completed?: boolean,
     important?: boolean,
-    dueDate?: Date | undefined
+    dueDate?: number | undefined
 }
