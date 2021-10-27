@@ -49,7 +49,7 @@ export const todosSlice = createSlice({
             const todo = state.entities[id]
             if (todo) state.selectedId = id;
         },
-        clearSelectedTodo: (state) => {
+        clearSelection: (state) => {
             state.selectedId = null;
         },
         toggleCompleted: (state, action) => {
@@ -90,7 +90,7 @@ export const selectIds = (state: RootState) => state.todos.ids
 export const selectEntities = (state: RootState) => state.todos.entities
 export const selectFilter = (state: RootState) => state.todos.filter
 export const selectPlaceholder = (state: RootState) => state.todos.placeholder
-export const selectSelected = (state: RootState) => {
+export const pickSelected = (state: RootState) => {
     if (state.todos.selectedId) {
         return state.todos.entities[state.todos.selectedId]
     }
@@ -116,7 +116,7 @@ export const {
     removeTodo,
     editTodo,
     selectTodo,
-    clearSelectedTodo,
+    clearSelection,
     toggleCompleted,
     toggleImportant,
     showActive,
