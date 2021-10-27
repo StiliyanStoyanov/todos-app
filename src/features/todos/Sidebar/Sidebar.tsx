@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import {FaStar, FaHome, FaCalendarAlt, FaChevronRight, FaChevronLeft} from 'react-icons/fa'
 import {useMediaQuery, useToggle} from "../../../hooks";
 import {SidebarButton} from "./SidebarButton";
@@ -6,9 +6,10 @@ import {Overlay} from "../Overlay";
 import {selectFilter, showAll, showImportant, showPlanned} from "../todosSlice";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 
+const toggleValues:[boolean, boolean] = [true, false]
 const Sidebar = () => {
     const dispatch = useAppDispatch();
-    const [expanded, {toggle, close: collapse}] = useToggle()
+    const [expanded, {toggle, setIndex1: collapse}] = useToggle(toggleValues)
     const matches = useMediaQuery('(max-width: 800px)', collapse);
     const filter = useAppSelector(selectFilter)
     return (
