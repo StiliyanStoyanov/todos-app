@@ -1,6 +1,6 @@
+import styled from '@emotion/styled'
 import {useSelector} from "react-redux";
 import {selectFilter} from "./todosSlice";
-import styled from "styled-components";
 
 const Heading = () => {
     const filter = useSelector(selectFilter);
