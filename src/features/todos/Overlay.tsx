@@ -1,5 +1,9 @@
-import styled from "styled-components";
-type OverlayProps = {zIndex?: number};
+import styled from "@emotion/styled";
+import {CSSProperties} from "react";
+
+type OverlayProps = {
+    zIndex?: CSSProperties['zIndex']
+}
 export const Overlay = styled.div<OverlayProps>`
   position: absolute;
   z-index: ${props => props.zIndex ?? 10};
