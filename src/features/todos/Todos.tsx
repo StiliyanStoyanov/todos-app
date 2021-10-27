@@ -1,9 +1,9 @@
 import React from 'react';
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import Sidebar from "./Sidebar/Sidebar";
 import AddTodo from "./AddTodo";
 import TodosList from "./TodosList";
-import TodoDetails from "./TodoDetails";
+import TodoDetails from "./TodoDetails/TodoDetails";
 import Heading from "./Heading";
 
 const Todos = () => {
@@ -21,8 +21,8 @@ const Todos = () => {
     );
 }
 const BackgroundLines = styled.div`
-  flex-grow: 1;
-  background: linear-gradient(to bottom, white 52px, #e5e5e5 52px);
+  flex: 1;
+  background: linear-gradient(180deg, white, white 52px, #e5e5e5 52px, #e5e5e5 52px);
   background-size: 100% 53px;
   box-shadow: inset 0 1px 0 0 #e5e5e5;
 `
@@ -34,6 +34,7 @@ const Layout = styled.div`
     display: flex;
     flex-flow: column;
     flex-grow: 1;
+    padding: 0 8px;
   }
   
   @media screen and (max-width: 800px) {
