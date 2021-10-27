@@ -1,14 +1,13 @@
-import Todos from "./features/todos/Todos";
-import GlobalStyles from "./globalStyles";
+import {ThemeProvider} from "./theme/ThemeProvider";
 import Navbar from "./common/Navbar";
+import Todos from "./features/todos/Todos";
 
 const App = () => {
   return (
-      <>
-          <GlobalStyles/>
+      <ThemeProvider>
           <Navbar/>
           <Todos/>
-      </>
+      </ThemeProvider>
   );
 }
 
